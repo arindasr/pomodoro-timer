@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
+import alarmSound from '../assets/audio/alarm.mp3';
+import lofiSong from '../assets/audio/lofi-song.mp3';
 
 const MODES = [
   {
@@ -26,6 +28,9 @@ const TimerPage = () => {
   const [activeMode, setActiveMode] = useState(MODES[0]);
   const [remainingSeconds, setRemainingSeconds] = useState(MODES[0].minutes * 60);
   const [isRunning, setIsRunning] = useState(false);
+  const [isLofiPlaying, setIsLofiPlaying] = useState(false);
+  const alarmAudioRef = useRef(null);
+  const lofiAudioRef = useRef(null);
 
   useEffect(() => {
     if (!isRunning) return undefined;
@@ -33,6 +38,12 @@ const TimerPage = () => {
     const interval = setInterval(() => {
       setRemainingSeconds((current) => {
         if (current <= 1) {
+          if (!alarmAudioRef.current) {
+            alarmAudioRef.current = new Audio(alarmSound);
+          }
+
+          alarmAudioRef.current.currentTime = 0;
+          alarmAudioRef.current.play().catch(() => {});
           setIsRunning(false);
           return 0;
         }
@@ -57,6 +68,31 @@ const TimerPage = () => {
     setActiveMode(mode);
     setIsRunning(false);
     setRemainingSeconds(mode.minutes * 60);
+  };
+
+  useEffect(() => {
+    return () => {
+      alarmAudioRef.current?.pause();
+      lofiAudioRef.current?.pause();
+    };
+  }, []);
+
+  const toggleLofiSong = () => {
+    if (!lofiAudioRef.current) {
+      lofiAudioRef.current = new Audio(lofiSong);
+      lofiAudioRef.current.addEventListener('ended', () => {
+        setIsLofiPlaying(false);
+      });
+    }
+
+    if (isLofiPlaying) {
+      lofiAudioRef.current.pause();
+      setIsLofiPlaying(false);
+      return;
+    }
+
+    lofiAudioRef.current.play();
+    setIsLofiPlaying(true);
   };
 
   return (
@@ -122,8 +158,13 @@ const TimerPage = () => {
         </div>
 
         <div className="timer-actions">
-          <button className="icon-control" type="button" onClick={resetTimer} aria-label="Settings">
-            <Icon name="settings" size={30} />
+          <button
+            className="icon-control"
+            type="button"
+            onClick={toggleLofiSong}
+            aria-label={isLofiPlaying ? 'Pause lofi music' : 'Play lofi music'}
+          >
+            <Icon name={isLofiPlaying ? 'pause' : 'play'} size={30} />
           </button>
           <button className="start-button" type="button" onClick={() => setIsRunning((current) => !current)}>
             {isRunning ? 'Pause' : 'Start'}

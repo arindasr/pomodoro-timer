@@ -57,40 +57,71 @@ button {
   z-index: 1;
 }
 
-.background-icon {
-  color: var(--line);
-  opacity: 0.28;
-  position: absolute;
+/* Background icons hanya muncul di layar > 1440px */
+@media (min-width: 1441px) {
+  .background-icon {
+    color: var(--line);
+    opacity: 0.28;
+    position: absolute;
+  }
+
+  .background-icon .icon {
+    stroke-width: 0.75;
+  }
+
+  .bg-frame {
+    left: clamp(22px, 5vw, 72px);
+    top: clamp(28px, 7vh, 78px);
+    transform: rotate(-10deg);
+  }
+
+  .bg-frame .icon {
+    width: clamp(180px, 25vw, 220px);
+    height: clamp(180px, 25vw, 220px);
+  }
+
+  .bg-shelf {
+    right: clamp(12px, 4vw, 56px);
+    top: clamp(58px, 11vh, 132px);
+    transform: rotate(2deg);
+  }
+
+  .bg-shelf .icon {
+    width: clamp(240px, 30vw, 280px);
+    height: clamp(240px, 30vw, 280px);
+  }
+
+  .bg-balls {
+    bottom: clamp(26px, 7vh, 78px);
+    left: clamp(20px, 5vw, 74px);
+    transform: rotate(8deg);
+  }
+
+  .bg-balls .icon {
+    width: clamp(190px, 24vw, 230px);
+    height: clamp(190px, 24vw, 230px);
+  }
+
+  .bg-sleeping-cat {
+    bottom: clamp(28px, 7vh, 84px);
+    right: clamp(18px, 5vw, 78px);
+    transform: rotate(-3deg);
+  }
+
+  .bg-sleeping-cat .icon {
+    width: clamp(220px, 28vw, 260px);
+    height: clamp(220px, 28vw, 260px);
+  }
 }
 
-.background-icon .icon {
-  stroke-width: 1.25;
+/* Sembunyikan background icons di layar <= 1440px */
+@media (max-width: 1440px) {
+  .background-icon {
+    display: none !important;
+  }
 }
 
-.bg-frame {
-  left: clamp(22px, 5vw, 72px);
-  top: clamp(28px, 7vh, 78px);
-  transform: rotate(-10deg);
-}
-
-.bg-shelf {
-  right: clamp(12px, 4vw, 56px);
-  top: clamp(58px, 11vh, 132px);
-  transform: rotate(2deg);
-}
-
-.bg-balls {
-  bottom: clamp(26px, 7vh, 78px);
-  left: clamp(20px, 5vw, 74px);
-  transform: rotate(8deg);
-}
-
-.bg-sleeping-cat {
-  bottom: clamp(28px, 7vh, 84px);
-  right: clamp(18px, 5vw, 78px);
-  transform: rotate(-3deg);
-}
-
+/* ... lanjutan kode CSS TimerPage yang sudah ada ... */
 .timer-stage {
   align-items: center;
   display: flex;
@@ -114,8 +145,17 @@ button {
   letter-spacing: 0;
   line-height: 0.95;
   margin: 0;
+  margin-bottom: 16px;
+  margin-top: -12px; /* naik sedikit */
+  padding-bottom: 12px;
   text-align: center;
   text-shadow: 0 5px 0 rgba(81, 64, 51, 0.06);
+  border-bottom: 4px solid var(--gold-deep);
+  border-image: linear-gradient(90deg, transparent, var(--gold-deep), var(--line), var(--gold-deep), transparent) 1;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .paw-print {
@@ -205,58 +245,59 @@ button {
 .cat-face {
   align-items: center;
   display: flex;
-  gap: 34px;
+  gap: clamp(20px, 4vw, 34px);
   justify-content: center;
   left: 50%;
   position: absolute;
-  top: 78px; /* dari 60px jadi 78px (turun) */
+  top: clamp(60px, 12vh, 88px);
   transform: translateX(-50%);
 }
 
 .cat-eye {
   background: var(--deep);
   border-radius: 999px;
-  box-shadow: 0 0 0 10px transparent, -26px 22px 0 -13px #edae9f; /* adjust shadow */
-  height: 32px; /* sedikit lebih kecil */
-  width: 26px; /* sedikit lebih kecil */
+  box-shadow: 0 0 0 10px transparent, 
+              clamp(-18px, -3vw, -26px) clamp(16px, 2.5vw, 22px) 0 clamp(-10px, -1.5vw, -13px) #edae9f;
+  height: clamp(20px, 3.5vw, 28px);
+  width: clamp(16px, 2.8vw, 22px);
   position: relative;
-  top: 4px; /* turun dikit */
+  top: clamp(1px, 0.3vw, 2px);
 }
 
 .cat-eye:last-child {
-  box-shadow: 26px 22px 0 -13px #edae9f; /* adjust shadow */
+  box-shadow: clamp(18px, 3vw, 26px) clamp(16px, 2.5vw, 22px) 0 clamp(-10px, -1.5vw, -13px) #edae9f;
 }
 
 .cat-mouth {
-  height: 28px;
+  height: clamp(18px, 3vw, 24px);
   position: relative;
-  width: 38px;
-  top: 6px; /* turun dikit */
+  width: clamp(26px, 4vw, 34px);
+  top: clamp(4px, 1vw, 8px);
 }
 
 .cat-mouth::before {
   background: var(--deep);
   border-radius: 50% 50% 48% 48%;
   content: "";
-  height: 8px;
+  height: clamp(4px, 0.8vw, 6px);
   left: 50%;
   position: absolute;
-  top: 2px;
+  top: clamp(0px, 0.3vw, 2px);
   transform: translateX(-50%);
-  width: 16px;
+  width: clamp(8px, 1.5vw, 12px);
 }
 
 .cat-mouth::after {
-  border-bottom: 4px solid var(--deep);
-  border-left: 4px solid var(--deep);
-  border-radius: 0 0 20px 20px;
-  border-right: 4px solid var(--deep);
+  border-bottom: clamp(2px, 0.4vw, 3px) solid var(--deep);
+  border-left: clamp(2px, 0.4vw, 3px) solid var(--deep);
+  border-radius: 0 0 clamp(12px, 2vw, 16px) clamp(12px, 2vw, 16px);
+  border-right: clamp(2px, 0.4vw, 3px) solid var(--deep);
   content: "";
-  height: 14px;
-  left: 6px;
+  height: clamp(8px, 1.5vw, 12px);
+  left: clamp(3px, 0.6vw, 5px);
   position: absolute;
-  top: 6px;
-  width: 24px;
+  top: clamp(4px, 0.8vw, 8px);
+  width: clamp(14px, 2.5vw, 20px);
 }
 
 .cat-tail {
@@ -603,8 +644,6 @@ button {
   transform: rotate(62deg);
 }
 
-/* perbaiki bagian books dan book-stack */
-
 .books {
   bottom: 42px;
   height: 188px;
@@ -624,7 +663,6 @@ button {
   width: 220px;
 }
 
-/* tanaman pot di kiri */
 .book-plant {
   background: #f6ddbb;
   border: 4px solid var(--line);
@@ -662,7 +700,6 @@ button {
   width: 24px;
 }
 
-/* tumpukan buku di kanan pot */
 .book-stack {
   background: #d4a373;
   border: 4px solid var(--line);
@@ -679,7 +716,6 @@ button {
   gap: 3px;
 }
 
-/* buku-buku dalam tumpukan */
 .book-stack .book {
   display: block;
   height: 18px;
@@ -708,7 +744,7 @@ button {
   background: #b87a3a;
   height: 14px;
 }
-/* Zzz speech bubble - tanpa gambar kucing */
+
 .nap-cat {
   background: transparent;
   border: none;
@@ -739,7 +775,6 @@ button {
   position: relative;
 }
 
-/* Ekor gelembung / segitiga kecil di bawah */
 .zz-only::after {
   content: '';
   position: absolute;
@@ -753,7 +788,6 @@ button {
   filter: drop-shadow(0 4px 4px rgba(92, 64, 43, 0.06));
 }
 
-/* Border ekor gelembung */
 .zz-only::before {
   content: '';
   position: absolute;
@@ -767,22 +801,85 @@ button {
   z-index: -1;
 }
 
+/* Responsive untuk cat face - mobile */
+@media (max-width: 760px) {
+  .cat-face {
+    top: clamp(50px, 10vh, 68px) !important;
+    gap: clamp(16px, 3vw, 24px) !important;
+  }
+  
+  .cat-eye {
+    height: clamp(16px, 3vw, 22px) !important;
+    width: clamp(12px, 2.2vw, 18px) !important;
+    box-shadow: 0 0 0 10px transparent, 
+                clamp(-14px, -2.5vw, -20px) clamp(12px, 2vw, 18px) 0 clamp(-8px, -1.2vw, -10px) #edae9f !important;
+  }
+  
+  .cat-eye:last-child {
+    box-shadow: clamp(14px, 2.5vw, 20px) clamp(12px, 2vw, 18px) 0 clamp(-8px, -1.2vw, -10px) #edae9f !important;
+  }
+  
+  .cat-mouth {
+    height: clamp(14px, 2.5vw, 20px) !important;
+    width: clamp(20px, 3.5vw, 28px) !important;
+    top: clamp(3px, 0.8vw, 6px) !important;
+  }
+  
+  .cat-mouth::before {
+    height: clamp(3px, 0.6vw, 5px) !important;
+    width: clamp(6px, 1.2vw, 10px) !important;
+    top: clamp(0px, 0.2vw, 1px) !important;
+  }
+  
+  .cat-mouth::after {
+    height: clamp(6px, 1.2vw, 10px) !important;
+    width: clamp(10px, 2vw, 16px) !important;
+    top: clamp(3px, 0.6vw, 6px) !important;
+    left: clamp(2px, 0.5vw, 4px) !important;
+    border-width: clamp(1.5px, 0.3vw, 2.5px) !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .cat-face {
+    top: clamp(40px, 8vh, 55px) !important;
+    gap: clamp(12px, 2.5vw, 18px) !important;
+  }
+  
+  .cat-eye {
+    height: clamp(12px, 2.5vw, 16px) !important;
+    width: clamp(10px, 2vw, 14px) !important;
+    box-shadow: 0 0 0 10px transparent, 
+                clamp(-10px, -2vw, -14px) clamp(8px, 1.5vw, 12px) 0 clamp(-6px, -1vw, -8px) #edae9f !important;
+  }
+  
+  .cat-eye:last-child {
+    box-shadow: clamp(10px, 2vw, 14px) clamp(8px, 1.5vw, 12px) 0 clamp(-6px, -1vw, -8px) #edae9f !important;
+  }
+  
+  .cat-mouth {
+    height: clamp(10px, 2vw, 14px) !important;
+    width: clamp(14px, 3vw, 20px) !important;
+    top: clamp(2px, 0.5vw, 4px) !important;
+  }
+  
+  .cat-mouth::before {
+    height: clamp(2px, 0.4vw, 4px) !important;
+    width: clamp(4px, 1vw, 8px) !important;
+  }
+  
+  .cat-mouth::after {
+    height: clamp(4px, 1vw, 8px) !important;
+    width: clamp(8px, 1.8vw, 12px) !important;
+    top: clamp(2px, 0.4vw, 4px) !important;
+    left: clamp(1px, 0.4vw, 3px) !important;
+  }
+}
+
 @media (max-width: 1080px) {
   .corner-decoration {
     opacity: 0.32;
     transform: scale(0.86);
-  }
-
-  .background-icon {
-    opacity: 0.2;
-  }
-
-  .bg-shelf {
-    right: -28px;
-  }
-
-  .bg-sleeping-cat {
-    right: -18px;
   }
 }
 
@@ -794,35 +891,6 @@ button {
 
   .timer-stage {
     gap: 20px;
-  }
-
-  .background-icon {
-    opacity: 0.16;
-  }
-
-  .background-icon .icon {
-    height: 98px;
-    width: 98px;
-  }
-
-  .bg-frame {
-    left: 8px;
-    top: 16px;
-  }
-
-  .bg-shelf {
-    right: -16px;
-    top: 52px;
-  }
-
-  .bg-balls {
-    bottom: 18px;
-    left: 4px;
-  }
-
-  .bg-sleeping-cat {
-    bottom: 22px;
-    right: -12px;
   }
 
   .cat-clock {
