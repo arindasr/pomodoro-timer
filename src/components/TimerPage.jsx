@@ -24,6 +24,12 @@ const MODES = [
   }
 ];
 
+const modeCardBase =
+  'flex min-h-[118px] cursor-pointer flex-col items-center justify-center gap-1.5 rounded-[28px] border-3 px-3.5 py-4 text-[#514033] transition duration-200 ease-out hover:-translate-y-0.5';
+const modeCardInactive = 'border-[#d4c2aa] bg-[#fffdf8]/90 hover:shadow-[0_12px_26px_rgba(92,64,43,0.12)]';
+const modeCardActive =
+  'border-[#b37b25] bg-linear-to-b from-[#ffe89f] to-[#ffd98c] shadow-[0_14px_28px_rgba(179,123,37,0.18)]';
+
 const TimerPage = () => {
   const [activeMode, setActiveMode] = useState(MODES[0]);
   const [remainingSeconds, setRemainingSeconds] = useState(MODES[0].minutes * 60);
@@ -96,8 +102,8 @@ const TimerPage = () => {
   };
 
   return (
-    <main className="timer-page">
-      <div className="background-icons" aria-hidden="true">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-[30px] text-[#514033]">
+      <div className="pointer-events-none absolute inset-0 z-1" aria-hidden="true">
         <span className="background-icon bg-frame">
           <Icon name="wallFrame" size={148} />
         </span>
@@ -112,8 +118,10 @@ const TimerPage = () => {
         </span>
       </div>
 
-      <section className="timer-stage" aria-label="Pomodoro timer">
-        <h1 className="timer-title">Pomodoro Timer</h1>
+      <section className="relative z-2 flex w-full max-w-[940px] flex-col items-center gap-7" aria-label="Pomodoro timer">
+        <h1 className="m-0 mb-4 -mt-3 w-fit max-w-full border-b-4 border-[#b37b25] px-1 pb-3 text-center text-[clamp(2.6rem,8vw,5.5rem)] leading-[0.95] font-black text-[#514033] [border-image:linear-gradient(90deg,transparent,#b37b25,#7a5b43,#b37b25,transparent)_1] [text-shadow:0_5px_0_rgba(81,64,51,0.06)]">
+          Pomodoro Timer
+        </h1>
 
         <div className="cat-clock" aria-live="polite">
           <div className="cat-ear cat-ear-left" />
@@ -130,47 +138,65 @@ const TimerPage = () => {
           </div>
           <div className="cat-tail" aria-hidden="true" />
 
-          <div className="timer-window">
-            <div className="timer-display">{formattedTime}</div>
-            <div className="status-badge">
-              <Icon name="sparkle" size={18} />
+          <div className="flex min-h-[178px] flex-col items-center justify-center rounded-[44px] border-3 border-[#cdb89c] bg-linear-to-b from-[#fffef9] to-[#fffaf0] px-5 pt-6 pb-5">
+            <div className="font-['Arial_Rounded_MT_Bold','Trebuchet_MS',system-ui,sans-serif] text-[clamp(4.8rem,17vw,9.4rem)] leading-[0.9] font-black tracking-normal text-[#3d2c22] tabular-nums">
+              {formattedTime}
+            </div>
+            <div className="mt-4 inline-flex min-w-[214px] items-center justify-center gap-3 rounded-full bg-[#ffe6ad] px-4.5 py-2 text-[clamp(1rem,3vw,1.35rem)] font-black text-[#514033]">
+              <Icon name="sparkle" size={18} className="fill-current text-[#f1bd50] [stroke-width:1.4]" />
               {statusLabel}
-              <Icon name="sparkle" size={18} />
+              <Icon name="sparkle" size={18} className="fill-current text-[#f1bd50] [stroke-width:1.4]" />
             </div>
           </div>
         </div>
 
-        <div className="mode-grid" role="group" aria-label="Timer mode">
+        <div className="grid w-full max-w-[710px] grid-cols-3 gap-4.5 max-[620px]:grid-cols-1" role="group" aria-label="Timer mode">
           {MODES.map((mode) => (
             <button
-              className={`mode-card ${activeMode.id === mode.id ? 'active' : ''}`}
+              className={`${modeCardBase} ${activeMode.id === mode.id ? modeCardActive : modeCardInactive}`}
               key={mode.id}
               type="button"
               onClick={() => selectMode(mode)}
             >
-              <span className="mode-illustration" aria-hidden="true">
+              <span
+                className={`inline-flex h-[46px] w-[52px] items-center justify-center ${
+                  activeMode.id === mode.id ? 'text-[#3d2c22]' : 'text-[#7a5b43]'
+                }`}
+                aria-hidden="true"
+              >
                 <Icon name={mode.icon} size={42} />
               </span>
-              <strong>{mode.label}</strong>
-              <span>{mode.minutes}:00</span>
+              <strong className="text-center text-[clamp(1.05rem,3vw,1.45rem)] leading-none font-black">
+                {mode.label}
+              </strong>
+              <span className="text-[clamp(0.95rem,2vw,1.18rem)] font-extrabold">{mode.minutes}:00</span>
             </button>
           ))}
         </div>
 
-        <div className="timer-actions">
+        <div className="grid w-full max-w-[650px] grid-cols-[96px_minmax(220px,360px)_96px] items-center justify-center gap-7.5 max-[620px]:grid-cols-[78px_minmax(170px,1fr)_78px] max-[620px]:gap-3">
           <button
-            className="icon-control"
+            className="inline-flex h-[78px] w-[78px] cursor-pointer items-center justify-center rounded-[22px] border-3 border-[#d4c2aa] bg-[#fffdf8]/95 text-[#7a5b43] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(92,64,43,0.12)]"
             type="button"
             onClick={toggleLofiSong}
             aria-label={isLofiPlaying ? 'Pause lofi music' : 'Play lofi music'}
           >
             <Icon name={isLofiPlaying ? 'pause' : 'play'} size={30} />
           </button>
-          <button className="start-button" type="button" onClick={() => setIsRunning((current) => !current)}>
+          <button
+            className="inline-flex min-h-[92px] cursor-pointer items-center justify-center gap-4.5 rounded-full border-4 border-[#3e2d24] bg-linear-to-b from-[#725542] to-[#5e4435] px-12 py-5 text-[clamp(2rem,6vw,3rem)] font-black text-[#fffaf0] shadow-[0_12px_0_rgba(78,56,43,0.12)] transition duration-200 ease-out hover:-translate-y-0.5 max-[620px]:min-h-[78px] max-[620px]:px-6"
+            type="button"
+            onClick={() => setIsRunning((current) => !current)}
+          >
             {isRunning ? 'Pause' : 'Start'}
-            <Icon name={isRunning ? 'pause' : 'play'} size={34} />
+            <Icon name={isRunning ? 'pause' : 'play'} size={34} className="fill-current [stroke-width:1.5]" />
           </button>
-          <button className="icon-control" type="button" onClick={resetTimer} aria-label="Reset timer">
+          <button
+            className="inline-flex h-[78px] w-[78px] cursor-pointer items-center justify-center rounded-[22px] border-3 border-[#d4c2aa] bg-[#fffdf8]/95 text-[#7a5b43] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(92,64,43,0.12)]"
+            type="button"
+            onClick={resetTimer}
+            aria-label="Reset timer"
+          >
             <Icon name="reset" size={32} />
           </button>
         </div>

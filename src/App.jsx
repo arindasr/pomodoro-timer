@@ -1,11 +1,7 @@
 import TimerPage from './components/TimerPage';
 
 function App() {
-  return (
-    <div className="app-shell">
-      <TimerPage />
-    </div>
-  );
+  return <TimerPage />;
 }
 
 export default App;
