@@ -63,7 +63,6 @@ const TimerPage = () => {
   const minutes = Math.floor(remainingSeconds / 60);
   const seconds = remainingSeconds % 60;
   const formattedTime = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-  const statusLabel = activeMode.id === 'pomodoro' ? 'Focus Time' : 'Break Time';
 
   const resetTimer = () => {
     setIsRunning(false);
@@ -142,11 +141,6 @@ const TimerPage = () => {
             <div className="font-['Arial_Rounded_MT_Bold','Trebuchet_MS',system-ui,sans-serif] text-[clamp(4.8rem,17vw,9.4rem)] leading-[0.9] font-black tracking-normal text-[#3d2c22] tabular-nums">
               {formattedTime}
             </div>
-            <div className="mt-4 inline-flex min-w-[214px] items-center justify-center gap-3 rounded-full bg-[#ffe6ad] px-4.5 py-2 text-[clamp(1rem,3vw,1.35rem)] font-black text-[#514033]">
-              <Icon name="sparkle" size={18} className="fill-current text-[#f1bd50] [stroke-width:1.4]" />
-              {statusLabel}
-              <Icon name="sparkle" size={18} className="fill-current text-[#f1bd50] [stroke-width:1.4]" />
-            </div>
           </div>
         </div>
 
@@ -174,30 +168,47 @@ const TimerPage = () => {
           ))}
         </div>
 
-        <div className="grid w-full max-w-[650px] grid-cols-[96px_minmax(220px,360px)_96px] items-center justify-center gap-7.5 max-[620px]:grid-cols-[78px_minmax(170px,1fr)_78px] max-[620px]:gap-3">
+        <div className="grid w-full max-w-[650px] grid-cols-[96px_minmax(220px,360px)_96px] items-center justify-center gap-7.5 max-[620px]:grid-cols-[88px_minmax(180px,1fr)_88px] max-[620px]:gap-4">
+          {/* Lofi Music Button */}
           <button
-            className="inline-flex h-[78px] w-[78px] cursor-pointer items-center justify-center rounded-[22px] border-3 border-[#d4c2aa] bg-[#fffdf8]/95 text-[#7a5b43] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(92,64,43,0.12)]"
+            className="inline-flex h-[78px] w-[78px] cursor-pointer items-center justify-center rounded-[22px] border-3 border-[#d4c2aa] bg-[#fffdf8]/95 text-[#7a5b43] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(92,64,43,0.12)] max-[620px]:h-[72px] max-[620px]:w-[72px]"
             type="button"
             onClick={toggleLofiSong}
             aria-label={isLofiPlaying ? 'Pause lofi music' : 'Play lofi music'}
           >
-            <Icon name={isLofiPlaying ? 'pause' : 'play'} size={30} />
+            <Icon 
+              name={isLofiPlaying ? 'pause' : 'play'} 
+              size={40} 
+              className="max-[620px]:!h-[32px] max-[620px]:!w-[32px]" 
+            />
           </button>
+
+          {/* Start/Pause Button */}
           <button
-            className="inline-flex min-h-[92px] cursor-pointer items-center justify-center gap-4.5 rounded-full border-4 border-[#3e2d24] bg-linear-to-b from-[#725542] to-[#5e4435] px-12 py-5 text-[clamp(2rem,6vw,3rem)] font-black text-[#fffaf0] shadow-[0_12px_0_rgba(78,56,43,0.12)] transition duration-200 ease-out hover:-translate-y-0.5 max-[620px]:min-h-[78px] max-[620px]:px-6"
+            className="inline-flex min-h-[92px] cursor-pointer items-center justify-center gap-4.5 rounded-full border-4 border-[#3e2d24] bg-linear-to-b from-[#725542] to-[#5e4435] px-12 py-5 text-[clamp(2rem,6vw,3rem)] font-black text-[#fffaf0] shadow-[0_12px_0_rgba(78,56,43,0.12)] transition duration-200 ease-out hover:-translate-y-0.5 max-[620px]:min-h-[82px] max-[620px]:px-6"
             type="button"
             onClick={() => setIsRunning((current) => !current)}
           >
             {isRunning ? 'Pause' : 'Start'}
-            <Icon name={isRunning ? 'pause' : 'play'} size={34} className="fill-current [stroke-width:1.5]" />
+            <Icon 
+              name={isRunning ? 'pause' : 'play'} 
+              size={44} 
+              className="fill-current [stroke-width:1.5] max-[620px]:!h-[34px] max-[620px]:!w-[34px]" 
+            />
           </button>
+
+          {/* Reset Button */}
           <button
-            className="inline-flex h-[78px] w-[78px] cursor-pointer items-center justify-center rounded-[22px] border-3 border-[#d4c2aa] bg-[#fffdf8]/95 text-[#7a5b43] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(92,64,43,0.12)]"
+            className="inline-flex h-[78px] w-[78px] cursor-pointer items-center justify-center rounded-[22px] border-3 border-[#d4c2aa] bg-[#fffdf8]/95 text-[#7a5b43] transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[0_12px_24px_rgba(92,64,43,0.12)] max-[620px]:h-[72px] max-[620px]:w-[72px]"
             type="button"
             onClick={resetTimer}
             aria-label="Reset timer"
           >
-            <Icon name="reset" size={32} />
+            <Icon 
+              name="reset" 
+              size={40} 
+              className="max-[620px]:!h-[32px] max-[620px]:!w-[32px]" 
+            />
           </button>
         </div>
       </section>

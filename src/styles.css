@@ -179,6 +179,7 @@ button {
   box-shadow: clamp(18px, 3vw, 26px) clamp(16px, 2.5vw, 22px) 0 clamp(-10px, -1.5vw, -13px) #edae9f;
 }
 
+/* ===== MULUT SAJA (TANPA HIDUNG) ===== */
 .cat-mouth {
   height: clamp(18px, 3vw, 24px);
   position: relative;
@@ -186,30 +187,23 @@ button {
   width: clamp(26px, 4vw, 34px);
 }
 
-.cat-mouth::before {
-  background: var(--deep);
-  border-radius: 50% 50% 48% 48%;
+/* HIDUNG DIHAPUS - tidak ada ::before */
+
+/* MULUT - bentuk W yang presisi */
+.cat-mouth::after {
+  border-bottom: clamp(2.5px, 0.5vw, 4px) solid var(--deep);
+  border-left: clamp(2.5px, 0.5vw, 4px) solid var(--deep);
+  border-radius: 0 0 clamp(10px, 2vw, 16px) clamp(10px, 2vw, 16px);
+  border-right: clamp(2.5px, 0.5vw, 4px) solid var(--deep);
   content: "";
-  height: clamp(4px, 0.8vw, 6px);
+  height: clamp(10px, 2vw, 16px);
   left: 50%;
   position: absolute;
-  top: clamp(0px, 0.3vw, 2px);
+  top: 0;
   transform: translateX(-50%);
-  width: clamp(8px, 1.5vw, 12px);
+  width: clamp(18px, 3.5vw, 28px);
 }
-
-.cat-mouth::after {
-  border-bottom: clamp(2px, 0.4vw, 3px) solid var(--deep);
-  border-left: clamp(2px, 0.4vw, 3px) solid var(--deep);
-  border-radius: 0 0 clamp(12px, 2vw, 16px) clamp(12px, 2vw, 16px);
-  border-right: clamp(2px, 0.4vw, 3px) solid var(--deep);
-  content: "";
-  height: clamp(8px, 1.5vw, 12px);
-  left: clamp(3px, 0.6vw, 5px);
-  position: absolute;
-  top: clamp(4px, 0.8vw, 8px);
-  width: clamp(14px, 2.5vw, 20px);
-}
+/* ===== END ===== */
 
 .cat-tail {
   border: 5px solid var(--line);
@@ -275,6 +269,11 @@ button {
 
   .cat-eye:last-child {
     box-shadow: clamp(14px, 2.5vw, 20px) clamp(12px, 2vw, 18px) 0 clamp(-8px, -1.2vw, -10px) #edae9f;
+  }
+
+  .cat-mouth::after {
+    height: clamp(8px, 1.5vw, 12px);
+    width: clamp(14px, 2.5vw, 20px);
   }
 
   .cat-tail {
